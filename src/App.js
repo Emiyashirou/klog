@@ -14,11 +14,11 @@ class App extends Component{
       <div className='App'>
         {/* <ResponsiveDrawer /> */}
         {/* <ComposeDialog /> */}
-        {/* <PostDialog /> */}
+        {/* <PostDialog id={"fef4f579-8cfe-4ebd-a391-874f9be061f0"} /> */}
         {/* <WorkPostList /> */}
         {/* <WorkCard /> */}
         {/* <LinearIndeterminate /> */}
-        <IdlePostList />
+        {/* <IdlePostList /> */}
       </div>
     );
   }

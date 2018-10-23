@@ -5,8 +5,30 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import fetch from 'isomorphic-fetch';
+
+const host_url = "https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/";
 
 class PostDialog extends React.Component {
+
+  constructor(props) {
+    super();
+    this.state.id = props.id;
+  }
+
+  componentDidMount(){
+    let self = this;
+    this.getPost()
+    .then(function(postData){
+      self.state.content = postData.data.content;
+    });
+  }
+
+  getPost(){
+    return fetch(host_url + this.state.id)
+      .then(response => response.json());
+  }
+
   state = {
     open: false,
     scroll: 'paper',
@@ -23,7 +45,7 @@ class PostDialog extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen('paper')}>Post Title</Button>
+        <Button onClick={this.handleClickOpen('paper')}>Post Title {this.state.id}</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -33,42 +55,7 @@ class PostDialog extends React.Component {
           <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-              facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-              at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-              sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum
-              nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-              et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras
-              mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+              {this.state.content}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
