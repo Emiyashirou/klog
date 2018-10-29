@@ -14,13 +14,17 @@ class PostDialog extends React.Component {
   constructor(props) {
     super();
     this.state.id = props.id;
+    this.state.buttonText = props.buttonText;
   }
 
   componentDidMount(){
     let self = this;
     this.getPost()
     .then(function(postData){
-      self.state.content = postData.data.content;
+      self.setState({
+        title: postData.data.title,
+        content: postData.data.content
+      });
     });
   }
 
@@ -45,14 +49,14 @@ class PostDialog extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen('paper')}>Post Title {this.state.id}</Button>
+        <Button onClick={this.handleClickOpen('paper')}>{this.state.buttonText}</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           scroll={this.state.scroll}
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">{this.state.title}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               {this.state.content}
@@ -63,7 +67,7 @@ class PostDialog extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.handleClose} color="primary">
-              Subscribe
+              Archive
             </Button>
           </DialogActions>
         </Dialog>

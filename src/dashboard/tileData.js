@@ -2,62 +2,49 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import StarIcon from '@material-ui/icons/Star';
-import SendIcon from '@material-ui/icons/Send';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
+import AddPostIcon from '@material-ui/icons/AddCircleOutline';
+import AddWorkIcon from '@material-ui/icons/AddBox';
+import AddIntoWorkIcon from '@material-ui/icons/HowToVote';
+import RemoveFromWorkIcon from '@material-ui/icons/Unarchive';
+import InfoIcon from '@material-ui/icons/Info'
 
-export const mailFolderListItems = (
+
+export const mainItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <InboxIcon />
+        <AddPostIcon />
       </ListItemIcon>
-      <ListItemText primary="Inbox" />
+      <ListItemText primary="Add Post" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <StarIcon />
+        <AddWorkIcon />
       </ListItemIcon>
-      <ListItemText primary="Starred" />
+      <ListItemText primary="Add Work" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <SendIcon />
+        <AddIntoWorkIcon />
       </ListItemIcon>
-      <ListItemText primary="Send mail" />
+      <ListItemText primary="Add Into Work" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <DraftsIcon />
+        <RemoveFromWorkIcon />
       </ListItemIcon>
-      <ListItemText primary="Drafts" />
+      <ListItemText primary="Remove From Work" />
     </ListItem>
   </div>
 );
 
-export const otherMailFolderListItems = (
+export const otherItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <MailIcon />
+        <InfoIcon />
       </ListItemIcon>
-      <ListItemText primary="All mail" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DeleteIcon />
-      </ListItemIcon>
-      <ListItemText primary="Trash" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ReportIcon />
-      </ListItemIcon>
-      <ListItemText primary="Spam" />
+      <ListItemText primary="Info" />
     </ListItem>
   </div>
 );

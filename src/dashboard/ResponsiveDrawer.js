@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
-import { mailFolderListItems, otherMailFolderListItems } from './tileData';
+import { mainItems, otherItems } from './tileData';
 
 const drawerWidth = 240;
 
@@ -66,9 +66,9 @@ class ResponsiveDrawer extends React.Component {
       <div>
         <div className={classes.toolbar} />
         <Divider />
-        <List>{mailFolderListItems}</List>
+        <List>{mainItems}</List>
         <Divider />
-        <List>{otherMailFolderListItems}</List>
+        <List>{otherItems}</List>
       </div>
     );
 
@@ -85,7 +85,7 @@ class ResponsiveDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Responsive drawer
+              Welcome to KLOG
             </Typography>
           </Toolbar>
         </AppBar>
@@ -118,7 +118,7 @@ class ResponsiveDrawer extends React.Component {
         </Hidden>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
+          <Typography noWrap>{'Your works and posts will be listed here.'}</Typography>
         </main>
       </div>
     );
