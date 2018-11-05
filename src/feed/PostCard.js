@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import PostDialog from './../dialog/PostDialog';
 
 const styles = {
   card: {
@@ -42,21 +43,21 @@ class PostCard extends React.Component {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
+          <Typography className={classes.title} color='textSecondary' gutterBottom>
             {this.state.work}
             </Typography>
-          <Typography variant="h5" component="h2">
+          <Typography variant='h5' component='h2'>
             {this.state.title}
             </Typography>
-          <Typography className={classes.pos} color="textSecondary">
+          <Typography className={classes.pos} color='textSecondary'>
             Novel
             </Typography>
-          <Typography component="p">
+          <Typography component='p'>
             {this.state.content}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">{this.state.id}</Button>
+          <PostDialog id={this.state.id} buttonText={'Read'}/>
         </CardActions>
       </Card>
     );

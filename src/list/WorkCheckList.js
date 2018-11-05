@@ -9,7 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 
-const host_url = "https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/work/";
+const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/work/';
 
 const styles = theme => ({
   root: {

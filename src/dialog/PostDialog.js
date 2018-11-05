@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import fetch from 'isomorphic-fetch';
 
-const host_url = "https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/";
+const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/';
 
 class PostDialog extends React.Component {
 
@@ -54,19 +54,19 @@ class PostDialog extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           scroll={this.state.scroll}
-          aria-labelledby="scroll-dialog-title"
+          aria-labelledby='scroll-dialog-title'
         >
-          <DialogTitle id="scroll-dialog-title">{this.state.title}</DialogTitle>
+          <DialogTitle id='scroll-dialog-title'>{this.state.title}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               {this.state.content}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color='primary'>
               Archive
             </Button>
           </DialogActions>

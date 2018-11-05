@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import PostDialog from './../dialog/PostDialog';
 
-const host_url = "https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post"
+const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post'
 
 const styles = theme => ({
   root: {
@@ -44,7 +44,7 @@ class PostCheckList extends React.Component {
   }
 
   getPostList(){
-    return fetch(this.state.inWork ? host_url + "?workId=IW" : host_url + "?workId=NA")
+    return fetch(this.state.inWork ? host_url + '?workId=IW' : host_url + '?workId=NA')
       .then(response => response.json());
   }
 
@@ -81,7 +81,7 @@ class PostCheckList extends React.Component {
               />
               <ListItemText primary={value.title} />
               <ListItemSecondaryAction>
-                <PostDialog id={value.id} buttonText={"Read"}/>
+                <PostDialog id={value.id} buttonText={'Read'}/>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
