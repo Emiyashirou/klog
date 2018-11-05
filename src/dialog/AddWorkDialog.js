@@ -27,34 +27,34 @@ export default class AddWorkDialog extends React.Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
+          aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id="form-dialog-title">New Work</DialogTitle>
+          <DialogTitle id='form-dialog-title'>New Work</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Work is a collection of post for easy organization.
             </DialogContentText>
             <TextField
               autoFocus
-              margin="dense"
-              id="title"
-              label="Title"
-              type="text"
+              margin='dense'
+              id='title'
+              label='Title'
+              type='text'
               fullWidth
             />
             <TextField
-              margin="dense"
-              id="desc"
-              label="Description"
-              type="text"
+              margin='dense'
+              id='desc'
+              label='Description'
+              type='text'
               fullWidth
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color='primary'>
               Submit
             </Button>
           </DialogActions>

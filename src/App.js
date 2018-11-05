@@ -9,6 +9,8 @@ import LinearIndeterminate from './shared/LinearIndeterminate';
 import AddWorkDialog from './dialog/AddWorkDialog';
 import PostCheckList from './list/PostCheckList';
 import WorkCheckList from './list/WorkCheckList';
+import WorkList from './list/WorkList';
+import PostList from './list/PostList';
 
 class App extends Component{
   render(){
@@ -16,11 +18,6 @@ class App extends Component{
       <div className='App'>
         <ResponsiveDrawer />
         {/* <ComposeDialog /> */}
-        {/* <PostDialog id={"fef4f579-8cfe-4ebd-a391-874f9be061f0"} buttonText={"Post of masterpiece"}/> */}
-        {/* <WorkCard id={"workId1"} description={"This is a novel"} title="Masterpiece1"/> */}
-        {/* <WorkCard id={"workId2"} description={"This is another novel"} title="Masterpiece2"/> */}
-        {/* <PostCard id={"fef4f579-8cfe-4ebd-a391-874f9be061f0"} title={"Post of masterpiece"} content={"This is the first line."} work={"A masterpiece"}/> */}
-        {/* <PostCard id={"fef4f579-8cfe-4ebd-a391-874f9be061f0"} title={"Post of masterpiece"} content={"This is the first line."} work={"A masterpiece"}/> */}
         {/* <LinearIndeterminate /> */}
         {/* <AddWorkDialog /> */}
         {/* <PostCheckList inWork={true} /> */}

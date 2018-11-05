@@ -26,6 +26,14 @@ class WorkCard extends React.Component {
     this.state.id = props.id;
     this.state.title = props.title;
     this.state.description = props.description;
+    this.state.image = -1;
+  }
+
+  getRandomInt() {
+    if(this.state.image < 0){
+      this.state.image = Math.floor(Math.random() * Math.floor(13));
+    }
+      return this.state.image;
   }
 
   state = {};
@@ -37,20 +45,20 @@ class WorkCard extends React.Component {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="/static/images/work/contemplative-reptile.jpg"
-            title="Contemplative Reptile"
+            image={'/static/images/work/' + this.getRandomInt() + '.jpg'}
+            title='Image'
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant='h5' component='h2'>
               {this.state.title}
             </Typography>
-            <Typography component="p">
+            <Typography component='p'>
               {this.state.description}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button size='small' color='primary' onClick={() => this.props.setCurrentWork(this.state.id, this.state.title)} >
             Read
           </Button>
         </CardActions>

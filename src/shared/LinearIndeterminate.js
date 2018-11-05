@@ -21,7 +21,7 @@ function LinearIndeterminate(props) {
     <div className={classes.root}>
       <LinearProgress />
       <br />
-      <LinearProgress color="secondary" />
+      <LinearProgress color='secondary' />
       <br />
       <LinearProgress
         classes={{ colorPrimary: classes.colorPrimary, barColorPrimary: classes.barColorPrimary }}

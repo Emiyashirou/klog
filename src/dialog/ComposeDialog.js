@@ -24,7 +24,7 @@ const styles = {
 };
 
 function Transition(props) {
-  return <Slide direction="up" {...props} />;
+  return <Slide direction='up' {...props} />;
 }
 
 class ComposeDialog extends React.Component {
@@ -53,24 +53,24 @@ class ComposeDialog extends React.Component {
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+              <IconButton color='inherit' onClick={this.handleClose} aria-label='Close'>
                 <CloseIcon />
               </IconButton>
-              <Typography variant="h6" color="inherit" className={classes.flex}>
+              <Typography variant='h6' color='inherit' className={classes.flex}>
                 Sound
               </Typography>
-              <Button color="inherit" onClick={this.handleClose}>
+              <Button color='inherit' onClick={this.handleClose}>
                 save
               </Button>
             </Toolbar>
           </AppBar>
           <List>
             <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
+              <ListItemText primary='Phone ringtone' secondary='Titania' />
             </ListItem>
             <Divider />
             <ListItem button>
-              <ListItemText primary="Default notification ringtone" secondary="Tethys" />
+              <ListItemText primary='Default notification ringtone' secondary='Tethys' />
             </ListItem>
           </List>
         </Dialog>

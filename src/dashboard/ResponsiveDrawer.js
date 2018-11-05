@@ -10,14 +10,23 @@ import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
-import { mainItems, otherItems } from './tileData';
+import WorkList from './../list/WorkList';
+import PostList from './../list/PostList';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import IdleIcon from '@material-ui/icons/ClearAll';
+import AddPostIcon from '@material-ui/icons/AddCircleOutline';
+import AddWorkIcon from '@material-ui/icons/AddBox';
+import AddIntoWorkIcon from '@material-ui/icons/HowToVote';
+import RemoveFromWorkIcon from '@material-ui/icons/Unarchive';
+import InfoIcon from '@material-ui/icons/Info'
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 440,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -48,12 +57,38 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
+  container: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  leftContainer: {
+    maxWidth: 400
+  },
+  rightContainer: {
+    maxWidth: 800
+  }
 });
 
 class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
+    workId: 'NA',
+    workName: 'Not included in any work'
   };
+
+  setCurrentWork = (workId, workName) => {
+    this.setState({
+      workId: workId,
+      workName: workName
+    });
+  }
+
+  getIdlePosts = () => {
+    this.setState({
+      workId: 'NA',
+      workName: 'Not included in any work'
+    });
+  }
 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
@@ -62,6 +97,52 @@ class ResponsiveDrawer extends React.Component {
   render() {
     const { classes, theme } = this.props;
 
+    const mainItems = (
+      <div>
+        <ListItem button onClick={this.getIdlePosts}>
+          <ListItemIcon>
+            <IdleIcon />
+          </ListItemIcon>
+          <ListItemText primary='Idle Posts' />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <AddPostIcon />
+          </ListItemIcon>
+          <ListItemText primary='Add Post' />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <AddWorkIcon />
+          </ListItemIcon>
+          <ListItemText primary='Add Work' />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <AddIntoWorkIcon />
+          </ListItemIcon>
+          <ListItemText primary='Add Into Work' />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <RemoveFromWorkIcon />
+          </ListItemIcon>
+          <ListItemText primary='Remove From Work' />
+        </ListItem>
+      </div>
+    );
+    
+    const otherItems = (
+      <div>
+        <ListItem button>
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText primary='Info' />
+        </ListItem>
+      </div>
+    );
+
     const drawer = (
       <div>
         <div className={classes.toolbar} />
@@ -69,6 +150,7 @@ class ResponsiveDrawer extends React.Component {
         <List>{mainItems}</List>
         <Divider />
         <List>{otherItems}</List>
+        <Divider />
       </div>
     );
 
@@ -77,21 +159,21 @@ class ResponsiveDrawer extends React.Component {
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton
-              color="inherit"
-              aria-label="Open drawer"
+              color='inherit'
+              aria-label='Open drawer'
               onClick={this.handleDrawerToggle}
               className={classes.navIconHide}
             >
-              <MenuIcon />
+            <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
+            <Typography variant='h6' color='inherit' noWrap>
               Welcome to KLOG
             </Typography>
           </Toolbar>
         </AppBar>
         <Hidden mdUp>
           <Drawer
-            variant="temporary"
+            variant='temporary'
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={this.state.mobileOpen}
             onClose={this.handleDrawerToggle}
@@ -105,9 +187,9 @@ class ResponsiveDrawer extends React.Component {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden smDown implementation="css">
+        <Hidden smDown implementation='css'>
           <Drawer
-            variant="permanent"
+            variant='permanent'
             open
             classes={{
               paper: classes.drawerPaper,
@@ -118,7 +200,14 @@ class ResponsiveDrawer extends React.Component {
         </Hidden>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography noWrap>{'Your works and posts will be listed here.'}</Typography>
+          <div className={classes.container}>
+            <div className={classes.leftContainer}>
+              <WorkList setCurrentWork={this.setCurrentWork}/>
+            </div>
+            <div className={classes.rightContainer}>
+              <PostList workId={this.state.workId} workName={this.state.workName}/>
+            </div>
+          </div>
         </main>
       </div>
     );
