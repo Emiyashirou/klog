@@ -6,8 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
 import PostDialog from './../dialog/PostDialog';
 
 const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post'
@@ -25,6 +23,7 @@ class PostCheckList extends React.Component {
   constructor(props) {
     super();
     this.state.inWork = props.inWork;
+    this.state.workId = props.workId;
   }
 
   state = {
@@ -32,9 +31,25 @@ class PostCheckList extends React.Component {
     postList: []
   };
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.workId !== this.props.workId){
+      let self = this;
+      this.setState({
+        inWork: this.props.inWork,
+        workId: this.props.workId
+      });
+      this.getPostList(this.props.inWork, this.props.workId)
+      .then(function(postListData){
+        self.setState({
+          postList: postListData.data
+        });
+      });
+    }
+  }
+
   componentDidMount(){
     let self = this;
-    this.getPostList()
+    this.getPostList(this.state.inWork, this.state.workId)
     .then(function(postListData){
       self.setState({
         checked: [],
@@ -43,8 +58,8 @@ class PostCheckList extends React.Component {
     });
   }
 
-  getPostList(){
-    return fetch(this.state.inWork ? host_url + '?workId=IW' : host_url + '?workId=NA')
+  getPostList(inWork, workId){
+    return fetch(inWork ? host_url + '?workId=' + workId : host_url + '?workId=NA')
       .then(response => response.json());
   }
 

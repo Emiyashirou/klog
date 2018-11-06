@@ -1,17 +1,16 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import AddWorkIcon from '@material-ui/icons/AddBox';
+import InfoIcon from '@material-ui/icons/Info'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-export default class AddWorkDialog extends React.Component {
+class InfoDialog extends React.Component {
   state = {
     open: false,
   };
@@ -29,42 +28,25 @@ export default class AddWorkDialog extends React.Component {
       <div>
         <ListItem button onClick={this.handleClickOpen}>
           <ListItemIcon>
-            <AddWorkIcon />
+            <InfoIcon />
           </ListItemIcon>
-          <ListItemText primary='Add Work' />
+          <ListItemText primary='Info' />
         </ListItem>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby='form-dialog-title'
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id='form-dialog-title'>New Work</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Info"}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Work is a collection of post for easy organization.
+            <DialogContentText id="alert-dialog-description">
+              Klog is still under construction.
             </DialogContentText>
-            <TextField
-              autoFocus
-              margin='dense'
-              id='title'
-              label='Title'
-              type='text'
-              fullWidth
-            />
-            <TextField
-              margin='dense'
-              id='desc'
-              label='Description'
-              type='text'
-              fullWidth
-            />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color='primary'>
-              Cancel
-            </Button>
-            <Button onClick={this.handleClose} color='primary'>
-              Submit
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              OK
             </Button>
           </DialogActions>
         </Dialog>
@@ -72,3 +54,5 @@ export default class AddWorkDialog extends React.Component {
     );
   }
 }
+
+export default InfoDialog;

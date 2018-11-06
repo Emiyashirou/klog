@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AddPostIcon from '@material-ui/icons/AddCircleOutline';
 
 const styles = {
   appBar: {
@@ -44,7 +46,12 @@ class ComposeDialog extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>Open full-screen dialog</Button>
+        <ListItem button onClick={this.handleClickOpen}>
+          <ListItemIcon>
+            <AddPostIcon />
+          </ListItemIcon>
+          <ListItemText primary='Add Post' />
+        </ListItem>
         <Dialog
           fullScreen
           open={this.state.open}
