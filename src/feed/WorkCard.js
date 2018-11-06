@@ -42,7 +42,7 @@ class WorkCard extends React.Component {
     const { classes } = this.props;
     return (
       <Card className={classes.card}>
-        <CardActionArea>
+        <CardActionArea onClick={() => this.props.setCurrentWork(this.state.id, this.state.title)}>
           <CardMedia
             className={classes.media}
             image={'/static/images/work/' + this.getRandomInt() + '.jpg'}

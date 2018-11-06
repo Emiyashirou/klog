@@ -1,20 +1,37 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import AddWorkIcon from '@material-ui/icons/AddBox';
+import RemoveFromWorkIcon from '@material-ui/icons/Unarchive';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import PostCheckList from './../list/PostCheckList';
 
-export default class AddWorkDialog extends React.Component {
+class RemoveFromWorkDialog extends React.Component {
+
+  constructor(props) {
+    super();
+    this.state.workId = props.workId;
+    this.state.workName = props.workName;
+  }
+
   state = {
     open: false,
   };
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.workId !== this.props.workId){
+      let self = this;
+      this.setState({
+        workName: this.props.workName,
+        workId: this.props.workId
+      });
+    }
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -29,41 +46,28 @@ export default class AddWorkDialog extends React.Component {
       <div>
         <ListItem button onClick={this.handleClickOpen}>
           <ListItemIcon>
-            <AddWorkIcon />
+            <RemoveFromWorkIcon />
           </ListItemIcon>
-          <ListItemText primary='Add Work' />
+          <ListItemText primary='Remove From Work' />
         </ListItem>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby='form-dialog-title'
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id='form-dialog-title'>New Work</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Remove From Work"}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Work is a collection of post for easy organization.
+            <DialogContentText id="alert-dialog-description">
+              {this.state.workName}
             </DialogContentText>
-            <TextField
-              autoFocus
-              margin='dense'
-              id='title'
-              label='Title'
-              type='text'
-              fullWidth
-            />
-            <TextField
-              margin='dense'
-              id='desc'
-              label='Description'
-              type='text'
-              fullWidth
-            />
           </DialogContent>
+          <PostCheckList workId={this.state.workId} inWork={true}/>
           <DialogActions>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleClose} color="primary" autoFocus disabled={this.state.workId === 'NA'}>
               Submit
             </Button>
           </DialogActions>
@@ -72,3 +76,5 @@ export default class AddWorkDialog extends React.Component {
     );
   }
 }
+
+export default RemoveFromWorkDialog;

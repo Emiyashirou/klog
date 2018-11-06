@@ -16,11 +16,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IdleIcon from '@material-ui/icons/ClearAll';
-import AddPostIcon from '@material-ui/icons/AddCircleOutline';
-import AddWorkIcon from '@material-ui/icons/AddBox';
-import AddIntoWorkIcon from '@material-ui/icons/HowToVote';
-import RemoveFromWorkIcon from '@material-ui/icons/Unarchive';
-import InfoIcon from '@material-ui/icons/Info'
+import ComposeDialog from '../dialog/ComposeDialog';
+import InfoDialog from '../dialog/InfoDialog';
+import AddWorkDialog from '../dialog/AddWorkDialog';
+import AddIntoWorkDialog from '../dialog/AddIntoWorkDialog';
+import RemoveFromWorkDialog from '../dialog/RemoveFromWorkDialog';
 
 const drawerWidth = 240;
 
@@ -105,41 +105,16 @@ class ResponsiveDrawer extends React.Component {
           </ListItemIcon>
           <ListItemText primary='Idle Posts' />
         </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <AddPostIcon />
-          </ListItemIcon>
-          <ListItemText primary='Add Post' />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <AddWorkIcon />
-          </ListItemIcon>
-          <ListItemText primary='Add Work' />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <AddIntoWorkIcon />
-          </ListItemIcon>
-          <ListItemText primary='Add Into Work' />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <RemoveFromWorkIcon />
-          </ListItemIcon>
-          <ListItemText primary='Remove From Work' />
-        </ListItem>
+        <ComposeDialog />
+        <AddWorkDialog />
+        <AddIntoWorkDialog />
+        <RemoveFromWorkDialog workId={this.state.workId} workName={this.state.workName}/>
       </div>
     );
     
     const otherItems = (
       <div>
-        <ListItem button>
-          <ListItemIcon>
-            <InfoIcon />
-          </ListItemIcon>
-          <ListItemText primary='Info' />
-        </ListItem>
+        <InfoDialog />
       </div>
     );
 
