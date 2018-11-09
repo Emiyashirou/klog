@@ -35,17 +35,17 @@ class InfoDialog extends React.Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
         >
-          <DialogTitle id="alert-dialog-title">{"Info"}</DialogTitle>
+          <DialogTitle id='alert-dialog-title'>{'Info'}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id='alert-dialog-description'>
               Klog is still under construction.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Button onClick={this.handleClose} color='primary' autoFocus>
               OK
             </Button>
           </DialogActions>

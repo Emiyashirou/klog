@@ -11,6 +11,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PostCheckList from './../list/PostCheckList';
 
+const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/remove-from-work';
+
 class RemoveFromWorkDialog extends React.Component {
 
   constructor(props) {
@@ -21,7 +23,14 @@ class RemoveFromWorkDialog extends React.Component {
 
   state = {
     open: false,
+    postCheckList: []
   };
+
+  handlePostCheckList = (checked) => {
+    this.setState({
+      postCheckList: checked
+    });
+  }
 
   componentDidUpdate(prevProps) {
     if(prevProps.workId !== this.props.workId){
@@ -41,6 +50,29 @@ class RemoveFromWorkDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  handleSubmit = () => {
+    if(this.state.postCheckList.length == 1 && this.state.workId != 'NA'){
+      let self = this;
+      let removeFromWork = {
+        'postId': this.state.postCheckList[0].id,
+        'workId': this.state.workId
+      };
+
+      return fetch(host_url, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(removeFromWork)
+      })
+      .then(function(response){
+        self.handleClose();
+        return response;
+      });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -53,21 +85,21 @@ class RemoveFromWorkDialog extends React.Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
         >
-          <DialogTitle id="alert-dialog-title">{"Remove From Work"}</DialogTitle>
+          <DialogTitle id='alert-dialog-title'>{'Remove From Work'}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id='alert-dialog-description'>
               {this.state.workName}
             </DialogContentText>
           </DialogContent>
-          <PostCheckList workId={this.state.workId} inWork={true}/>
+          <PostCheckList handlePostCheckList={this.handlePostCheckList} workId={this.state.workId} inWork={true}/>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus disabled={this.state.workId === 'NA'}>
+            <Button onClick={this.handleSubmit} color='primary' autoFocus disabled={this.state.workId === 'NA' || this.state.postCheckList.length != 1}>
               Submit
             </Button>
           </DialogActions>

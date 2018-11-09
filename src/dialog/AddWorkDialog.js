@@ -11,9 +11,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/work';
+
 export default class AddWorkDialog extends React.Component {
   state = {
     open: false,
+    title: '',
+    description: ''
   };
 
   handleClickOpen = () => {
@@ -23,6 +27,34 @@ export default class AddWorkDialog extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+  handleSubmit = () => {
+    let self = this;
+    let newWork = {
+      'title': this.state.title,
+	    'priority': 0,
+	    'description': this.state.description
+    };
+
+    return fetch(host_url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newWork)
+      })
+      .then(function(response){
+        self.handleClose();
+        return response;
+      });
+  }
 
   render() {
     return (
@@ -49,6 +81,8 @@ export default class AddWorkDialog extends React.Component {
               id='title'
               label='Title'
               type='text'
+              value={this.state.title}
+              onChange={this.handleChange('title')}
               fullWidth
             />
             <TextField
@@ -56,6 +90,8 @@ export default class AddWorkDialog extends React.Component {
               id='desc'
               label='Description'
               type='text'
+              value={this.state.description}
+              onChange={this.handleChange('description')}
               fullWidth
             />
           </DialogContent>
@@ -63,7 +99,7 @@ export default class AddWorkDialog extends React.Component {
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleSubmit} color='primary'>
               Submit
             </Button>
           </DialogActions>
