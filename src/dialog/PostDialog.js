@@ -7,7 +7,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import fetch from 'isomorphic-fetch';
 
-const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/';
+const get_post_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/';
+
+const archive_post_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/archive-post/';
 
 class PostDialog extends React.Component {
 
@@ -29,7 +31,7 @@ class PostDialog extends React.Component {
   }
 
   getPost(){
-    return fetch(host_url + this.state.id)
+    return fetch(get_post_url + this.state.id)
       .then(response => response.json());
   }
 
@@ -45,6 +47,22 @@ class PostDialog extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleArchive = () => {
+    let self = this;
+
+    return fetch(archive_post_url + this.state.id, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+      })
+      .then(function(response){
+        self.handleClose();
+        return response;
+      }); 
+  }
 
   render() {
     return (
@@ -66,7 +84,7 @@ class PostDialog extends React.Component {
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleArchive} color='primary'>
               Archive
             </Button>
           </DialogActions>

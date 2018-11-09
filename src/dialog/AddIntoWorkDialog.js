@@ -12,10 +12,26 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PostCheckList from './../list/PostCheckList';
 import WorkCheckList from './../list/WorkCheckList';
 
+const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/add-into-work';
+
 class AddIntoWorkDialog extends React.Component {
   state = {
     open: false,
+    postCheckList: [],
+    workCheckList: []
   };
+
+  handlePostCheckList = (checked) => {
+    this.setState({
+      postCheckList: checked
+    });
+  }
+
+  handleWorkCheckList = (checked) => {
+    this.setState({
+      workCheckList: checked
+    });
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -24,6 +40,29 @@ class AddIntoWorkDialog extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleSubmit = () => {
+    if(this.state.postCheckList.length == 1 && this.state.workCheckList.length == 1){
+      let self = this;
+      let addIntoWork = {
+        'postId': this.state.postCheckList[0].id,
+        'workId': this.state.workCheckList[0].id
+      };
+
+      return fetch(host_url, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(addIntoWork)
+      })
+      .then(function(response){
+        self.handleClose();
+        return response;
+      });
+    }
+  }
 
   render() {
     return (
@@ -37,27 +76,28 @@ class AddIntoWorkDialog extends React.Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
         >
-          <DialogTitle id="alert-dialog-title">{"Add Into Work"}</DialogTitle>
+          <DialogTitle id='alert-dialog-title'>{'Add Into Work'}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id='alert-dialog-description'>
               Post List
             </DialogContentText>
           </DialogContent>
-          <PostCheckList inWork={false} />
+          <PostCheckList handlePostCheckList={this.handlePostCheckList} inWork={false} />
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id='alert-dialog-description'>
               Work List
             </DialogContentText>
           </DialogContent>
-          <WorkCheckList />
+          <WorkCheckList handleWorkCheckList={this.handleWorkCheckList} />
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Button onClick={this.handleSubmit} color='primary' autoFocus 
+            disabled={this.state.postCheckList.length != 1 || this.state.workCheckList.length != 1}>
               Submit
             </Button>
           </DialogActions>

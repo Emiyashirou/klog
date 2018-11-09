@@ -25,6 +25,12 @@ class WorkCheckList extends React.Component {
     workList: []
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if((prevState.checked.length != this.state.checked.length)){
+      this.props.handleWorkCheckList(this.state.checked);
+    }
+  }
+
   componentDidMount(){
     let self = this;
     this.getWorkList()

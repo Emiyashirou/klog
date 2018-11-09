@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import PostDialog from './../dialog/PostDialog';
@@ -31,7 +30,11 @@ class PostCheckList extends React.Component {
     postList: []
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
+    if((prevState.checked.length != this.state.checked.length)){
+      this.props.handlePostCheckList(this.state.checked);
+    }
+    
     if(prevProps.workId !== this.props.workId){
       let self = this;
       this.setState({
@@ -95,9 +98,9 @@ class PostCheckList extends React.Component {
                 disableRipple
               />
               <ListItemText primary={value.title} />
-              <ListItemSecondaryAction>
+              <div>
                 <PostDialog id={value.id} buttonText={'Read'}/>
-              </ListItemSecondaryAction>
+              </div>
             </ListItem>
           ))}
         </List>

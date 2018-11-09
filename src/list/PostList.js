@@ -56,10 +56,10 @@ class PostList extends React.Component {
 
   cutContent(content){
     if(content == null){
-      return "";
+      return '';
     }
     if(content.length == 0){
-      return "";
+      return '';
     }
     return content.substring(0, 100) + '...';
   }
