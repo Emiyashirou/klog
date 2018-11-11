@@ -11,6 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PostCheckList from './../list/PostCheckList';
 import WorkCheckList from './../list/WorkCheckList';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/add-into-work';
 
@@ -18,7 +19,8 @@ class AddIntoWorkDialog extends React.Component {
   state = {
     open: false,
     postCheckList: [],
-    workCheckList: []
+    workCheckList: [],
+    loading: false
   };
 
   handlePostCheckList = (checked) => {
@@ -44,6 +46,11 @@ class AddIntoWorkDialog extends React.Component {
   handleSubmit = () => {
     if(this.state.postCheckList.length == 1 && this.state.workCheckList.length == 1){
       let self = this;
+
+      self.setState({
+        loading: true
+      });
+
       let addIntoWork = {
         'postId': this.state.postCheckList[0].id,
         'workId': this.state.workCheckList[0].id
@@ -58,10 +65,18 @@ class AddIntoWorkDialog extends React.Component {
         body: JSON.stringify(addIntoWork)
       })
       .then(function(response){
+        self.setState({
+          loading: false
+        });
         self.handleClose();
+        self.handleReload();
         return response;
       });
     }
+  }
+
+  handleReload = () => {
+    window.location.reload();
   }
 
   render() {
@@ -80,6 +95,7 @@ class AddIntoWorkDialog extends React.Component {
           aria-describedby='alert-dialog-description'
         >
           <DialogTitle id='alert-dialog-title'>{'Add Into Work'}</DialogTitle>
+          {this.state.loading ? <LinearProgress /> : null}
           <DialogContent>
             <DialogContentText id='alert-dialog-description'>
               Post List

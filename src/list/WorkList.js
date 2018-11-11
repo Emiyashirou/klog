@@ -16,11 +16,16 @@ class WorkList extends React.Component {
   constructor(props) {
     super();
     this.state.setCurrentWork = props.setCurrentWork;
+    this.state.setLoading = props.setLoading;
   }
 
   state = {
     workList: []
   };
+
+  componentWillMount(){
+    this.state.setLoading('workLoading', true);
+  }
 
   componentDidMount(){
     let self = this;
@@ -29,6 +34,7 @@ class WorkList extends React.Component {
       self.setState({
         workList: workListData.data
       });
+      self.state.setLoading('workLoading', false);
     });
   }
 

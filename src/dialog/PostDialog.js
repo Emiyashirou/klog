@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import fetch from 'isomorphic-fetch';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const get_post_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/';
 
@@ -38,6 +39,7 @@ class PostDialog extends React.Component {
   state = {
     open: false,
     scroll: 'paper',
+    loading: false
   };
 
   handleClickOpen = scroll => () => {
@@ -48,8 +50,16 @@ class PostDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  handleReload = () => {
+    window.location.reload();
+  }
+
   handleArchive = () => {
     let self = this;
+
+    self.setState({
+      loading: true
+    });
 
     return fetch(archive_post_url + this.state.id, {
       method: 'PUT',
@@ -59,7 +69,11 @@ class PostDialog extends React.Component {
       }
       })
       .then(function(response){
+        self.setState({
+          loading: false
+        });
         self.handleClose();
+        self.handleReload();
         return response;
       }); 
   }
@@ -75,6 +89,7 @@ class PostDialog extends React.Component {
           aria-labelledby='scroll-dialog-title'
         >
           <DialogTitle id='scroll-dialog-title'>{this.state.title}</DialogTitle>
+          {this.state.loading ? <LinearProgress /> : null}
           <DialogContent>
             <DialogContentText>
               {this.state.content}

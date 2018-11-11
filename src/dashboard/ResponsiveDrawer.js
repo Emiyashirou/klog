@@ -86,8 +86,15 @@ class ResponsiveDrawer extends React.Component {
     mobileOpen: false,
     workId: 'NA',
     workName: 'Not included in any work',
-    loading: true
+    workLoading: false,
+    postLoading: false
   };
+
+  setLoading = (loadingVar, loadingSet) => {
+    this.setState({
+      [loadingVar]: loadingSet
+    });
+  }
 
   setCurrentWork = (workId, workName) => {
     this.setState({
@@ -99,8 +106,7 @@ class ResponsiveDrawer extends React.Component {
   getIdlePosts = () => {
     this.setState({
       workId: 'NA',
-      workName: 'Not included in any work',
-      loading: false
+      workName: 'Not included in any work'
     });
   }
 
@@ -190,17 +196,17 @@ class ResponsiveDrawer extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <div className={classes.contentBox}>
-            {this.state.loading ? <LinearIndeterminate /> : null}
+            {this.state.workLoading || this.state.postLoading ? <LinearIndeterminate /> : null}
             <Typography variant='h4' color='primary' noWrap align='center'>
               {this.state.workName == 'NA' ? 'Posts not included in any work' : this.state.workName}
             </Typography>
             <div className={classes.container}>
               <div className={classes.leftContainer}>
-                <WorkList setCurrentWork={this.setCurrentWork}/>
+                <WorkList setLoading={this.setLoading} setCurrentWork={this.setCurrentWork}/>
               </div>
               <div className={classes.vl} />
               <div className={classes.rightContainer}>
-                <PostList workId={this.state.workId} workName={this.state.workName}/>
+                <PostList setLoading={this.setLoading} workId={this.state.workId} workName={this.state.workName}/>
               </div>
             </div>
           </div>

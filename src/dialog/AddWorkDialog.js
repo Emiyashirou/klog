@@ -10,8 +10,11 @@ import AddWorkIcon from '@material-ui/icons/AddBox';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/work';
+const get_work_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/work';
+
+const archive_work_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/archive-work/';
 
 export default class AddWorkDialog extends React.Component {
 
@@ -35,14 +38,15 @@ export default class AddWorkDialog extends React.Component {
   }
 
   getWork(){
-    return fetch(host_url + '/' + this.state.id)
+    return fetch(get_work_url + '/' + this.state.id)
       .then(response => response.json());
   }
 
   state = {
     open: false,
     title: '',
-    description: ''
+    description: '',
+    loading: false
   };
 
   handleClickOpen = () => {
@@ -67,8 +71,12 @@ export default class AddWorkDialog extends React.Component {
 	    'description': this.state.description
     };
 
+    self.setState({
+      loading: true
+    });
+
     if(this.state.isNew){
-      return fetch(host_url, {
+      return fetch(get_work_url, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -77,11 +85,15 @@ export default class AddWorkDialog extends React.Component {
         body: JSON.stringify(newWork)
         })
         .then(function(response){
+          self.setState({
+            loading: false
+          });
           self.handleClose();
+          self.handleReload();
           return response;
         });
     } else {
-      return fetch(host_url + '/' + this.state.id, {
+      return fetch(get_work_url + '/' + this.state.id, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -90,11 +102,43 @@ export default class AddWorkDialog extends React.Component {
         body: JSON.stringify(newWork)
       })
       .then(function(response){
+        self.setState({
+          loading: false
+        });
         self.handleClose();
+        self.handleReload();
         return response;
       });
     }
     
+  }
+
+  handleArchive = () => {
+    let self = this;
+
+    self.setState({
+      loading: true
+    });
+
+    return fetch(archive_work_url + this.state.id, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+      })
+      .then(function(response){
+        self.setState({
+          loading: false
+        });
+        self.handleClose();
+        self.handleReload();
+        return response;
+      }); 
+  }
+
+  handleReload = () => {
+    window.location.reload();
   }
 
   render() {
@@ -119,6 +163,7 @@ export default class AddWorkDialog extends React.Component {
             <DialogTitle id='form-dialog-title'>New Work</DialogTitle> :
             <DialogTitle id='form-dialog-title'>Edit Work</DialogTitle>
           }
+          {this.state.loading ? <LinearProgress /> : null}
           <DialogContent>
             <DialogContentText>
               Work is a collection of post for easy organization.
@@ -149,6 +194,9 @@ export default class AddWorkDialog extends React.Component {
             </Button>
             <Button onClick={this.handleSubmit} color='primary'>
               Submit
+            </Button>
+            <Button onClick={this.handleArchive} color='primary'>
+              Archive
             </Button>
           </DialogActions>
         </Dialog>

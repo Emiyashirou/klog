@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PostCheckList from './../list/PostCheckList';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/remove-from-work';
 
@@ -23,7 +24,8 @@ class RemoveFromWorkDialog extends React.Component {
 
   state = {
     open: false,
-    postCheckList: []
+    postCheckList: [],
+    loading: false
   };
 
   handlePostCheckList = (checked) => {
@@ -50,9 +52,18 @@ class RemoveFromWorkDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  handleReload = () => {
+    window.location.reload();
+  }
+
   handleSubmit = () => {
     if(this.state.postCheckList.length == 1 && this.state.workId != 'NA'){
       let self = this;
+
+      self.setState({
+        loading: true
+      });
+
       let removeFromWork = {
         'postId': this.state.postCheckList[0].id,
         'workId': this.state.workId
@@ -67,7 +78,11 @@ class RemoveFromWorkDialog extends React.Component {
         body: JSON.stringify(removeFromWork)
       })
       .then(function(response){
+        self.setState({
+          loading: false
+        });
         self.handleClose();
+        self.handleReload();
         return response;
       });
     }
@@ -89,6 +104,7 @@ class RemoveFromWorkDialog extends React.Component {
           aria-describedby='alert-dialog-description'
         >
           <DialogTitle id='alert-dialog-title'>{'Remove From Work'}</DialogTitle>
+          {this.state.loading ? <LinearProgress /> : null}
           <DialogContent>
             <DialogContentText id='alert-dialog-description'>
               {this.state.workName}
