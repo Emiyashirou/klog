@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import AddWorkDialog from '../dialog/AddWorkDialog';
 
 const styles = {
   card: {
@@ -61,6 +62,7 @@ class WorkCard extends React.Component {
           <Button size='small' color='primary' onClick={() => this.props.setCurrentWork(this.state.id, this.state.title)} >
             Read
           </Button>
+          <AddWorkDialog id={this.state.id} isNew={false} buttonText={'Edit'}/>
         </CardActions>
       </Card>
     );

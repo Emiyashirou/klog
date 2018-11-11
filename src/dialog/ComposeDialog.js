@@ -35,10 +35,35 @@ function Transition(props) {
 }
 
 class ComposeDialog extends React.Component {
+
+  constructor(props) {
+    super();
+    this.state.id = props.id;
+    this.state.isNew = props.isNew; 
+  }
+
+  componentDidMount(){
+    if(!this.state.isNew){
+      let self = this;
+      this.getPost()
+      .then(function(postData){
+        self.setState({
+          title: postData.data.title,
+          content: postData.data.content
+        });
+      });
+    }
+  }
+
+  getPost(){
+    return fetch(host_url + '/' + this.state.id)
+      .then(response => response.json());
+  }  
+
   state = {
     open: false,
     title: '',
-    description: ''
+    content: ''
   };
 
   handleClickOpen = () => {
@@ -63,30 +88,49 @@ class ComposeDialog extends React.Component {
       'content': this.state.content 
     }
 
-    return fetch(host_url, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newPost)
-      })
-      .then(function(response){
-        self.handleClose();
-        return response;
-      });
+    if(this.state.isNew){
+      return fetch(host_url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newPost)
+        })
+        .then(function(response){
+          self.handleClose();
+          return response;
+        });
+    } else {
+      return fetch(host_url + '/' + this.state.id, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newPost)
+        })
+        .then(function(response){
+          self.handleClose();
+          return response;
+        });
+    }
+    
   }
 
   render() {
     const { classes } = this.props;
     return (
       <div>
-        <ListItem button onClick={this.handleClickOpen}>
-          <ListItemIcon>
-            <AddPostIcon />
-          </ListItemIcon>
-          <ListItemText primary='Add Post' />
-        </ListItem>
+        {
+          this.state.isNew ? 
+          <ListItem button onClick={this.handleClickOpen}>
+            <ListItemIcon>
+              <AddPostIcon />
+            </ListItemIcon>
+            <ListItemText primary='Add Post' />
+          </ListItem> : <Button onClick={this.handleClickOpen}>Edit</Button>
+        }
         <Dialog
           fullScreen
           open={this.state.open}
@@ -98,9 +142,15 @@ class ComposeDialog extends React.Component {
               <IconButton color='inherit' onClick={this.handleClose} aria-label='Close'>
                 <CloseIcon />
               </IconButton>
-              <Typography variant='h6' color='inherit' className={classes.flex}>
-                Compose New Post
-              </Typography>
+              {
+                this.state.isNew ?
+                <Typography variant='h6' color='inherit' className={classes.flex}>
+                  Compose New Post
+                </Typography> :
+                <Typography variant='h6' color='inherit' className={classes.flex}>
+                  Edit Post
+                </Typography>
+              }
               <Button color='inherit' onClick={this.handleSave}>
                 save
               </Button>

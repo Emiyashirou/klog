@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PostDialog from './../dialog/PostDialog';
+import ComposeDialog from './../dialog/ComposeDialog';
 
 const styles = {
   card: {
@@ -57,6 +58,7 @@ class PostCard extends React.Component {
         </CardContent>
         <CardActions>
           <PostDialog id={this.state.id} buttonText={'Read'}/>
+          <ComposeDialog id={this.state.id} isNew={false} buttonText={'Edit'}/>
         </CardActions>
       </Card>
     );
