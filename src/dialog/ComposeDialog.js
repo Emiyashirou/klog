@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddPostIcon from '@material-ui/icons/AddCircleOutline';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post';
 
@@ -63,8 +64,13 @@ class ComposeDialog extends React.Component {
   state = {
     open: false,
     title: '',
-    content: ''
+    content: '',
+    loading: false
   };
+
+  handleReload = () => {
+    window.location.reload();
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -88,6 +94,10 @@ class ComposeDialog extends React.Component {
       'content': this.state.content 
     }
 
+    self.setState({
+      loading: true
+    });
+
     if(this.state.isNew){
       return fetch(host_url, {
         method: 'POST',
@@ -98,7 +108,11 @@ class ComposeDialog extends React.Component {
         body: JSON.stringify(newPost)
         })
         .then(function(response){
+          self.setState({
+            loading: false
+          });
           self.handleClose();
+          self.handleReload();
           return response;
         });
     } else {
@@ -111,7 +125,11 @@ class ComposeDialog extends React.Component {
         body: JSON.stringify(newPost)
         })
         .then(function(response){
+          self.setState({
+            loading: false
+          });
           self.handleClose();
+          self.handleReload();
           return response;
         });
     }
@@ -156,6 +174,7 @@ class ComposeDialog extends React.Component {
               </Button>
             </Toolbar>
           </AppBar>
+          {this.state.loading ? <LinearProgress /> : null}
           <TextField
             id='ocompose-dialog-title'
             label='Title'

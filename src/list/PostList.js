@@ -17,6 +17,7 @@ class PostList extends React.Component {
     super();
     this.state.workId = props.workId;
     this.state.workName = props.workName;
+    this.state.setLoading = props.setLoading;
   }
 
   state = {
@@ -39,6 +40,10 @@ class PostList extends React.Component {
     }
   }
 
+  componentWillMount(){
+    this.state.setLoading('postLoading', true);
+  }
+
   componentDidMount(){
     let self = this;
     this.getPostList(this.state.workId)
@@ -46,6 +51,7 @@ class PostList extends React.Component {
       self.setState({
         postList: postListData.data
       });
+      self.state.setLoading('postLoading', false);
     });
   }
 
