@@ -21,6 +21,7 @@ import InfoDialog from '../dialog/InfoDialog';
 import AddWorkDialog from '../dialog/AddWorkDialog';
 import AddIntoWorkDialog from '../dialog/AddIntoWorkDialog';
 import RemoveFromWorkDialog from '../dialog/RemoveFromWorkDialog';
+import LinearIndeterminate from './../shared/LinearIndeterminate';
 
 const drawerWidth = 240;
 
@@ -58,14 +59,25 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
   },
   container: {
+    marginTop: 10,
     display: 'flex',
     flexDirection: 'row'
   },
+  contentBox: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   leftContainer: {
-    maxWidth: 400
+    width: '50%'
   },
   rightContainer: {
-    maxWidth: 800
+    width: '50%'
+  },
+  vl: {
+    borderLeft: '6px solid #3f51b5',
+    left: '50%',
+    marginLeft: '-3px',
+    top: 0,
   }
 });
 
@@ -73,7 +85,8 @@ class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
     workId: 'NA',
-    workName: 'Not included in any work'
+    workName: 'Not included in any work',
+    loading: true
   };
 
   setCurrentWork = (workId, workName) => {
@@ -86,7 +99,8 @@ class ResponsiveDrawer extends React.Component {
   getIdlePosts = () => {
     this.setState({
       workId: 'NA',
-      workName: 'Not included in any work'
+      workName: 'Not included in any work',
+      loading: false
     });
   }
 
@@ -105,8 +119,8 @@ class ResponsiveDrawer extends React.Component {
           </ListItemIcon>
           <ListItemText primary='Idle Posts' />
         </ListItem>
-        <ComposeDialog />
-        <AddWorkDialog />
+        <ComposeDialog isNew={true} id={'NA'}/>
+        <AddWorkDialog isNew={true} id={'NA'}/>
         <AddIntoWorkDialog />
         <RemoveFromWorkDialog workId={this.state.workId} workName={this.state.workName}/>
       </div>
@@ -175,12 +189,19 @@ class ResponsiveDrawer extends React.Component {
         </Hidden>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <div className={classes.container}>
-            <div className={classes.leftContainer}>
-              <WorkList setCurrentWork={this.setCurrentWork}/>
-            </div>
-            <div className={classes.rightContainer}>
-              <PostList workId={this.state.workId} workName={this.state.workName}/>
+          <div className={classes.contentBox}>
+            {this.state.loading ? <LinearIndeterminate /> : null}
+            <Typography variant='h4' color='primary' noWrap align='center'>
+              {this.state.workName == 'NA' ? 'Posts not included in any work' : this.state.workName}
+            </Typography>
+            <div className={classes.container}>
+              <div className={classes.leftContainer}>
+                <WorkList setCurrentWork={this.setCurrentWork}/>
+              </div>
+              <div className={classes.vl} />
+              <div className={classes.rightContainer}>
+                <PostList workId={this.state.workId} workName={this.state.workName}/>
+              </div>
             </div>
           </div>
         </main>
