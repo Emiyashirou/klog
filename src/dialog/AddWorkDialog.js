@@ -189,13 +189,13 @@ export default class AddWorkDialog extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleClose} color='secondary'>
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color='primary'>
               Submit
             </Button>
-            <Button onClick={this.handleArchive} color='primary'>
+            <Button onClick={this.handleArchive} disabled={this.state.id === 'NA'}>
               Archive
             </Button>
           </DialogActions>

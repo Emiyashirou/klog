@@ -111,7 +111,7 @@ class RemoveFromWorkDialog extends React.Component {
           </DialogContent>
           <PostCheckList handlePostCheckList={this.handlePostCheckList} workId={this.state.workId} inWork={true}/>
           <DialogActions>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleClose} color='secondary'>
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color='primary' autoFocus disabled={this.state.workId === 'NA' || this.state.postCheckList.length !== 1}>
