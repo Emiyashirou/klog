@@ -36,7 +36,6 @@ class RemoveFromWorkDialog extends React.Component {
 
   componentDidUpdate(prevProps) {
     if(prevProps.workId !== this.props.workId){
-      let self = this;
       this.setState({
         workName: this.props.workName,
         workId: this.props.workId
@@ -57,7 +56,7 @@ class RemoveFromWorkDialog extends React.Component {
   }
 
   handleSubmit = () => {
-    if(this.state.postCheckList.length == 1 && this.state.workId != 'NA'){
+    if(this.state.postCheckList.length === 1 && this.state.workId !== 'NA'){
       let self = this;
 
       self.setState({
@@ -115,7 +114,7 @@ class RemoveFromWorkDialog extends React.Component {
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color='primary' autoFocus disabled={this.state.workId === 'NA' || this.state.postCheckList.length != 1}>
+            <Button onClick={this.handleSubmit} color='primary' autoFocus disabled={this.state.workId === 'NA' || this.state.postCheckList.length !== 1}>
               Submit
             </Button>
           </DialogActions>

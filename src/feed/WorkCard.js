@@ -32,7 +32,9 @@ class WorkCard extends React.Component {
 
   getRandomInt() {
     if(this.state.image < 0){
-      this.state.image = Math.floor(Math.random() * Math.floor(13));
+      this.setState({
+        image: Math.floor(Math.random() * Math.floor(13))
+      });
     }
       return this.state.image;
   }

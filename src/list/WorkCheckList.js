@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
 
 const host_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/work/';
 
@@ -26,7 +23,7 @@ class WorkCheckList extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if((prevState.checked.length != this.state.checked.length)){
+    if((prevState.checked.length !== this.state.checked.length)){
       this.props.handleWorkCheckList(this.state.checked);
     }
   }

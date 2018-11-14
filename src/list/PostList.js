@@ -64,7 +64,7 @@ class PostList extends React.Component {
     if(content == null){
       return '';
     }
-    if(content.length == 0){
+    if(content.length === 0){
       return '';
     }
     return content.substring(0, 100) + '...';
