@@ -198,7 +198,7 @@ class ResponsiveDrawer extends React.Component {
           <div className={classes.contentBox}>
             {this.state.workLoading || this.state.postLoading ? <LinearIndeterminate /> : null}
             <Typography variant='h4' color='primary' noWrap align='center'>
-              {this.state.workName == 'NA' ? 'Posts not included in any work' : this.state.workName}
+              {this.state.workName === 'NA' ? 'Posts not included in any work' : this.state.workName}
             </Typography>
             <div className={classes.container}>
               <div className={classes.leftContainer}>

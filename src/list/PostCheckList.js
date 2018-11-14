@@ -31,7 +31,7 @@ class PostCheckList extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if((prevState.checked.length != this.state.checked.length)){
+    if((prevState.checked.length !== this.state.checked.length)){
       this.props.handlePostCheckList(this.state.checked);
     }
     

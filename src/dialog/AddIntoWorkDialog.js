@@ -44,7 +44,7 @@ class AddIntoWorkDialog extends React.Component {
   };
 
   handleSubmit = () => {
-    if(this.state.postCheckList.length == 1 && this.state.workCheckList.length == 1){
+    if(this.state.postCheckList.length === 1 && this.state.workCheckList.length === 1){
       let self = this;
 
       self.setState({
@@ -113,7 +113,7 @@ class AddIntoWorkDialog extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color='primary' autoFocus 
-            disabled={this.state.postCheckList.length != 1 || this.state.workCheckList.length != 1}>
+            disabled={this.state.postCheckList.length !== 1 || this.state.workCheckList.length !== 1}>
               Submit
             </Button>
           </DialogActions>
