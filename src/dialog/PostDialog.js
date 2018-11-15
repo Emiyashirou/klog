@@ -7,17 +7,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import fetch from 'isomorphic-fetch';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core';
 
 const get_post_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/';
 
 const archive_post_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/archive-post/';
-
-const styles = theme => ({
-  postContent: {
-    minWidth: 400
-  }
-});
 
 class PostDialog extends React.Component {
 
@@ -45,7 +38,7 @@ class PostDialog extends React.Component {
 
   state = {
     open: false,
-    scroll: 'body',
+    scroll: 'paper',
     loading: false
   };
 
@@ -86,7 +79,6 @@ class PostDialog extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
         <Button onClick={this.handleClickOpen('paper')}>{this.state.buttonText}</Button>
@@ -100,7 +92,6 @@ class PostDialog extends React.Component {
           {this.state.loading ? <LinearProgress /> : null}
           <DialogContent>
               <TextField
-                className={classes.postContent}
                 fullWidth={true}
                 variant='standard'
                 disabled={true}
@@ -124,4 +115,4 @@ class PostDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(PostDialog);
+export default PostDialog;
