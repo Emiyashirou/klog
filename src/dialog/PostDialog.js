@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import fetch from 'isomorphic-fetch';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -46,7 +45,7 @@ class PostDialog extends React.Component {
 
   state = {
     open: false,
-    scroll: 'paper',
+    scroll: 'body',
     loading: false
   };
 
@@ -100,18 +99,16 @@ class PostDialog extends React.Component {
           <DialogTitle id='scroll-dialog-title'>{this.state.title}</DialogTitle>
           {this.state.loading ? <LinearProgress /> : null}
           <DialogContent>
-            <DialogContentText>
-            <TextField
-              className={classes.postContent}
-              fullWidth='true'
-              variant='standard'
-              disabled='true'
-              id='post-content'
-              multiline
-              value={this.state.content}
-              margin='normal'
-              />
-            </DialogContentText>
+              <TextField
+                className={classes.postContent}
+                fullWidth={true}
+                variant='standard'
+                disabled={true}
+                id='post-content'
+                multiline
+                value={this.state.content}
+                margin='normal'
+                />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='secondary'>
