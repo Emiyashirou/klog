@@ -176,7 +176,7 @@ class ComposeDialog extends React.Component {
           </AppBar>
           {this.state.loading ? <LinearProgress /> : null}
           <TextField
-            id='ocompose-dialog-title'
+            id='compose-dialog-title'
             label='Title'
             value={this.state.title}
             className={classes.textField}
