@@ -1,16 +1,38 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import fetch from 'isomorphic-fetch';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
 
 const get_post_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/post/';
 
 const archive_post_url = 'https://8vcheayky1.execute-api.us-east-2.amazonaws.com/dev/archive-post/';
+
+const styles = theme => ({
+  appBar: {
+    position: 'relative'
+  },
+  flex: {
+    flex: 1,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  }
+});
+
+function Transition(props) {
+  return <Slide direction='up' {...props} />;
+}
 
 class PostDialog extends React.Component {
 
@@ -38,12 +60,13 @@ class PostDialog extends React.Component {
 
   state = {
     open: false,
-    scroll: 'paper',
+    title: '',
+    content: '',
     loading: false
   };
 
-  handleClickOpen = scroll => () => {
-    this.setState({ open: true, scroll });
+  handleClickOpen = () => {
+    this.setState({ open: true });
   };
 
   handleClose = () => {
@@ -79,40 +102,48 @@ class PostDialog extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <Button onClick={this.handleClickOpen('paper')}>{this.state.buttonText}</Button>
+        <Button onClick={this.handleClickOpen}>Read</Button>
         <Dialog
+          fullScreen
           open={this.state.open}
           onClose={this.handleClose}
-          scroll={this.state.scroll}
-          aria-labelledby='scroll-dialog-title'
+          TransitionComponent={Transition}
         >
-          <DialogTitle id='scroll-dialog-title'>{this.state.title}</DialogTitle>
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton color='inherit' onClick={this.handleClose} aria-label='Close'>
+                <CloseIcon />
+              </IconButton>
+              <Typography variant='h6' color='inherit' className={classes.flex}>
+                {this.state.title}
+              </Typography>
+              <Button color='inherit' onClick={this.handleArchive}>
+                Archive
+              </Button>
+            </Toolbar>
+          </AppBar>
           {this.state.loading ? <LinearProgress /> : null}
-          <DialogContent>
-              <TextField
-                fullWidth={true}
-                variant='standard'
-                disabled={true}
-                id='post-content'
-                multiline
-                value={this.state.content}
-                margin='normal'
-                />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color='secondary'>
-              Cancel
-            </Button>
-            <Button onClick={this.handleArchive} color='primary'>
-              Archive
-            </Button>
-          </DialogActions>
+          <TextField
+            id='post-dialog-content'
+            multiline
+            value={this.state.content}
+            className={classes.textField}
+            margin='normal'
+            InputProps={{
+              disableUnderline: true
+            }}
+          />
         </Dialog>
       </div>
     );
   }
 }
 
-export default PostDialog;
+PostDialog.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(PostDialog);
