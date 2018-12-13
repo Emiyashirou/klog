@@ -43,6 +43,12 @@ class InfoDialog extends React.Component {
             <DialogContentText id='alert-dialog-description'>
               Klog is still under construction.
             </DialogContentText>
+            <DialogContentText>
+              Frontend code base: https://bitbucket.org/leilislalom/post-site-klog/src/develop/
+            </DialogContentText>
+            <DialogContentText>
+              Backend code base: https://bitbucket.org/leilislalom/post-site-klog-server/src/develop/
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary' autoFocus>
